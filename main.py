@@ -17,6 +17,7 @@ app.add_middleware(
 class addScore(BaseModel):
     username: str
     score: int
+    difficulty: str
 
 @app.get("/top10/")
 def top10():
@@ -26,7 +27,7 @@ def top10():
 
         cursor.execute("SELECT * FROM highscores ORDER BY score DESC LIMIT 10")
         result = cursor.fetchall()
-        result = [{"username":n[0],"score":n[1]} for n in result]
+        result = [{"username" : n[0], "score" : n[1], "difficulty" : n[2]} for n in result]
 
         return result
     except Exception as e:
@@ -40,7 +41,7 @@ def add_score(i: addScore):
         conn = sq.connect("database.db")
         cursor = conn.cursor()
 
-        cursor.execute("INSERT INTO highscores (username, score) VALUES (?, ?)",(i.username,i.score))
+        cursor.execute("INSERT INTO highscores (username, score, difficulty) VALUES (?, ?, ?)",(i.username, i.score, i.difficulty))
         conn.commit()
 
         return {"details":"Added successfully"}

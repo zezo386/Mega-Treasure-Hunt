@@ -4,9 +4,9 @@ const ctx = canvas.getContext("2d");
 const API_URL = "http://127.0.0.1:8000/";
 
 const DIFFICULTY = {
-  easy: { time: 80, playerSpeed: 5, sharkSpeed: 1.6, sharkPerLevel: 1, coinBase: 6, chaseChance: 0.15 },
-  medium: { time: 60, playerSpeed: 4.5, sharkSpeed: 2.4, sharkPerLevel: 1, coinBase: 7, chaseChance: 0.35 },
-  hard: { time: 45, playerSpeed: 4.2, sharkSpeed: 3.2, sharkPerLevel: 2, coinBase: 8, chaseChance: 0.6 }
+  easy: { time: 80, playerSpeed: 5, sharkSpeed: 1.6, sharkPerLevel: 1, coinBase: 3, chaseChance: 0.15 },
+  medium: { time: 60, playerSpeed: 4.5, sharkSpeed: 2.4, sharkPerLevel: 1, coinBase: 6, chaseChance: 0.35 },
+  hard: { time: 45, playerSpeed: 4.2, sharkSpeed: 3.2, sharkPerLevel: 2, coinBase: 12, chaseChance: 0.6 }
 };
 
 const LEVEL_THEMES = [
@@ -671,7 +671,10 @@ async function loadLeaderBoard(){
   for (let i = 0; i < data.length; i++){
     leaderBoardHtml += `
       <div class="leaderBoardScore">
-        <span class="rank ${i==0 ? "first" :( ((i == 1) ? "second" : ((i==2) ? "third" : "" )))}">${i+1}-</span><span class="scoreUsername">${data[i].username}: </span><span class="scoreScore">${data[i].score}</span>
+        <span class="rank ${i==0 ? "first" :( ((i == 1) ? "second" : ((i==2) ? "third" : "" )))}">${i+1}-</span>
+        <span class="scoreUsername">${data[i].username}: </span>
+        <span class="scoreScore">${data[i].score}</span>
+        <span class="scoreDifficulty ${data[i].difficulty}">${data[i].difficulty}</span>
       </div>
     `;
   }
@@ -710,7 +713,8 @@ async function addScore(score){
       },
       body: JSON.stringify({
         username: localStorage.getItem("username"),
-        score: score
+        score: score,
+        difficulty: difficulty
       })
     });
 

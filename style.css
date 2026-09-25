@@ -236,6 +236,10 @@ button:hover {
   flex-direction: row;
 }
 
+#main {
+  padding-top: 100px;
+}
+
 .leaderBoard {
   position: absolute;
   display: flex;
@@ -259,7 +263,7 @@ button:hover {
   padding: 25px;
   display: flex;
   flex-direction: row;
-  padding-right: 0px;
+  padding-right: 10px;
   gap: 10px;
   align-items: center;
 }
@@ -284,6 +288,18 @@ button:hover {
 
 .rank.third {
   color: #e7912e;
+}
+
+.scoreDifficulty.easy {
+  color: #26ca78;
+}
+
+.scoreDifficulty.medium {
+  color: #e1e42e;
+}
+
+.scoreDifficulty.hard {
+  color: #e71515;
 }
 
 .nameForm {

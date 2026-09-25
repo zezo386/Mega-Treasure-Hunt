@@ -8,7 +8,8 @@ def setup():
 
     cursor.execute("""CREATE TABLE highscores (
                    username TEXT NOT NULL,
-                   score INTEGER DEFAULT 0
+                   score INTEGER NOT NULL DEFAULT 0,
+                   difficulty TEXT NOT NULL DEFAULT "medium"
     )""")
 
     conn.commit()
