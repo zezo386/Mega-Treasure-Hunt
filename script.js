@@ -559,6 +559,9 @@ function endGame(won) {
     document.getElementById("highscore").innerText = score;
   }
 
+  addScore(score);
+  loadLeaderBoard();
+
   document.getElementById("gameOverTitle").innerText = won ? "TIME UP!" : "GAME OVER";
   document.getElementById("gameOverStats").innerHTML =
     "you scored <b>" + score + "</b> points and reached level <b>" + level + "</b> on " + difficulty.toUpperCase() +
@@ -676,8 +679,51 @@ async function loadLeaderBoard(){
   document.getElementById("leaderBoard").innerHTML = leaderBoardHtml;
 }
 
+function checkName(){
+  if (localStorage.getItem("username")){
+    document.getElementById("nameForm").classList.add("hidden");
+    document.getElementById("main").classList.remove("hidden")
+  }
+}
+
+function confirmUsername(){
+  let name = document.getElementById("nameInput").value.trim();
+  if (name.length < 3) {
+    document.getElementById("msg").innerHTML = "Name must be atleast 3 characters long";
+    return;
+  }
+  if (name.length > 20) {
+    document.getElementById("msg").innerHTML = "Name must be atmost 20 characters long";
+    return;
+  }
+
+  localStorage.setItem("username", name);
+  checkName();
+}
+
+async function addScore(score){
+  try {
+    let request = await fetch(API_URL+"add_score/", {
+      method: "POST",
+      headers: {
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        username: localStorage.getItem("username"),
+        score: score
+      })
+    });
+
+    let data = await request.json()
+  }
+  catch(e){
+    console.log("an error has occured: ", e)
+  }
+}
+
 document.addEventListener("DOMContentLoaded", async function (e){
   e.preventDefault();
+  checkName();
   await loadLeaderBoard();
 })
 

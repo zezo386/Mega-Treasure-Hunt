@@ -285,3 +285,29 @@ button:hover {
 .rank.third {
   color: #e7912e;
 }
+
+.nameForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.nameInput {
+  background: #dcdcdc;
+  padding: 20px;
+  font-size: 24px;
+  padding-left: 10px;
+  border: none;
+  border-radius: 10px;
+  transform: translateY(-3%);
+  transition: transform 0.3s;
+}
+
+.nameInput:hover {
+  transform: translateY(0%);
+  transition: transform 0.3s;
+}
+
+.nameInput:focus {
+  outline: none;
+}
