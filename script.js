@@ -1,6 +1,8 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+const API_URL = "http://127.0.0.1:8000/";
+
 const DIFFICULTY = {
   easy: { time: 80, playerSpeed: 5, sharkSpeed: 1.6, sharkPerLevel: 1, coinBase: 6, chaseChance: 0.15 },
   medium: { time: 60, playerSpeed: 4.5, sharkSpeed: 2.4, sharkPerLevel: 1, coinBase: 7, chaseChance: 0.35 },
@@ -637,5 +639,46 @@ function startGame() {
 
   showMsg("GO GO GO!!", "#7CFC00");
 }
+
+async function getLeaderBoardData(){
+  try {
+    let request = await fetch(API_URL+"top10/");
+
+    let data = await request.json();
+
+    console.log(data)
+
+    return data
+
+  }
+  catch(e){
+    console.log("an error occured: " + e);
+  }
+}
+
+async function loadLeaderBoard(){
+  let data = await getLeaderBoardData();
+
+  let leaderBoardHtml = "";
+
+  leaderBoardHtml += `
+    <h1>Leader Board</h1>
+  `
+
+  for (let i = 0; i < data.length; i++){
+    leaderBoardHtml += `
+      <div class="leaderBoardScore">
+        <span class="rank ${i==0 ? "first" :( ((i == 1) ? "second" : ((i==2) ? "third" : "" )))}">${i+1}-</span><span class="scoreUsername">${data[i].username}: </span><span class="scoreScore">${data[i].score}</span>
+      </div>
+    `;
+  }
+
+  document.getElementById("leaderBoard").innerHTML = leaderBoardHtml;
+}
+
+document.addEventListener("DOMContentLoaded", async function (e){
+  e.preventDefault();
+  await loadLeaderBoard();
+})
 
 draw();

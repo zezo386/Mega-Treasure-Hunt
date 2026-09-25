@@ -230,3 +230,58 @@ button:hover {
 #instructions b {
   color: #dcdcdc;
 }
+
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.leaderBoard {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  max-width: 25vw;
+  left: 75vw;
+  top: 5vh;
+  gap: 10px;
+  background: #0d0f16;
+  padding: 30px;
+  padding-left: 15px;
+  padding-top: 15px;
+  border: 1px solid #2a2f38;
+  border-radius: 12px;
+}
+
+.leaderBoardScore {
+  background: #181b21;
+  border: 1px solid #2a2f38;
+  border-radius: 4px;
+  padding: 25px;
+  display: flex;
+  flex-direction: row;
+  padding-right: 0px;
+  gap: 10px;
+  align-items: center;
+}
+
+.scoreScore {
+  color: #1c5c86;
+  font-size: 20px;
+}
+
+.rank {
+  color: #c0dddd;
+  font-size: 26px;
+}
+
+.rank.first {
+  color: #ebd303;
+}
+
+.rank.second {
+  color: #b8b8b8;
+}
+
+.rank.third {
+  color: #e7912e;
+}
