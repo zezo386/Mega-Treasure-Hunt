@@ -69,3 +69,20 @@ def top5pr(username: str):
     finally:
         conn.close()
 
+@app.get("/notes/")
+def get_notes():
+    try:
+        conn = sq.connect("database.db")
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM notes")
+        result = cursor.fetchall()
+        result = [{"username" : n[0], "note" : n[1]} for n in result]
+
+        return result
+    except HTTPException:
+        raise HTTPException(500, "")
+    except Exception as e:
+        raise HTTPException(500, f"an error occured, {e}")
+    finally:
+        conn.close()

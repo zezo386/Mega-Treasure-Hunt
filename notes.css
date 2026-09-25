@@ -1,0 +1,22 @@
+.container {
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.notes {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+}
+
+.noteCard {
+    background: #0d0f16;
+    border: 1px solid #2a2f38;
+    border-radius: 10px;
+    min-width: fit-content;
+    width: 33vw;
+}

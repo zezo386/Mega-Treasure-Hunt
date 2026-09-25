@@ -5,12 +5,22 @@ def setup():
     cursor = conn.cursor()
 
     cursor.execute("DROP TABLE IF EXISTS highscores")
+    cursor.execute("DROP TABLE IF EXISTS notes")
 
-    cursor.execute("""CREATE TABLE highscores (
+    cursor.execute("""
+                   CREATE TABLE highscores (
                    username TEXT NOT NULL,
                    score INTEGER NOT NULL DEFAULT 0,
                    difficulty TEXT NOT NULL DEFAULT "medium"
-    )""")
+                    )
+    """)
+
+    cursor.execute("""
+                   CREATE TABLE notes (
+                   username TEXT NOT NULL,
+                   note TEXT
+                   )
+    """)
 
     conn.commit()
 

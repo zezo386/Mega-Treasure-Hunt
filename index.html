@@ -1,114 +1,114 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MEGA TREASURE HUNT GAME!!!</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>MEGA TREASURE HUNT GAME!!!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="overlay" id="nameForm">
-  <div class="nameForm">
-    <input type="text" placeholder="Enter your name: " class="nameInput" id="nameInput">
-    <div class="msg" id="msg"></div>
-    <button onclick="confirmUsername()">Confirm name</button>
-  </div>
-</div>
-
-<div class="overlay hidden" id="main">
-  <h1>☠️ MEGA TREASURE HUNT GAME!!! 🏴‍☠️</h1>
-  <p class="subtitle">collect the gold. dodge the sharks. dont die.</p>
-
-  <div id="leaderBoard" class="leaderBoard">
-    <h1>Leader Board</h1>
+  <div class="overlay" id="nameForm">
+    <div class="nameForm">
+      <input type="text" placeholder="Enter your name: " class="nameInput" id="nameInput">
+      <div class="msg" id="msg"></div>
+      <button onclick="confirmUsername()">Confirm name</button>
+    </div>
   </div>
 
-  <div id="gameWrap">
-    <canvas id="gameCanvas" width="640" height="420"></canvas>
+  <div class="overlay hidden" id="main">
+    <h1>☠️ MEGA TREASURE HUNT GAME!!! 🏴‍☠️</h1>
+    <p class="subtitle">collect the gold. dodge the sharks. dont die.</p>
 
-    <div id="menuOverlay" class="overlay">
-      <h2>PICK UR DIFFICULTY</h2>
-      <div id="diffButtons">
-        <button class="diffBtn" data-diff="easy" onclick="selectDifficulty('easy')">EASY 😎</button>
-        <button class="diffBtn" data-diff="medium" onclick="selectDifficulty('medium')">MEDIUM 😬</button>
-        <button class="diffBtn" data-diff="hard" onclick="selectDifficulty('hard')">HARD 💀</button>
+    <div id="leaderBoard" class="leaderBoard">
+      <h1>Leader Board</h1>
+    </div>
+
+    <div id="gameWrap">
+      <canvas id="gameCanvas" width="640" height="420"></canvas>
+
+      <div id="menuOverlay" class="overlay">
+        <h2>PICK UR DIFFICULTY</h2>
+        <div id="diffButtons">
+          <button class="diffBtn" data-diff="easy" onclick="selectDifficulty('easy')">EASY 😎</button>
+          <button class="diffBtn" data-diff="medium" onclick="selectDifficulty('medium')">MEDIUM 😬</button>
+          <button class="diffBtn" data-diff="hard" onclick="selectDifficulty('hard')">HARD 💀</button>
+        </div>
+        <p id="selectedDiffText">selected: MEDIUM</p>
+        <button id="playBtn" onclick="startGame()">▶ PLAY</button>
+        <p class="tinytext">high score (medium): <span id="menuHighscore">0</span></p>
+        <div id="statsPanel">
+          <span>games played: <b id="statGames">0</b></span>
+          <span>total treasure: <b id="statCoins">0</b></span>
+          <span>best combo ever: <b id="statCombo">x1</b></span>
+          <span>deepest level: <b id="statLevel">1</b></span>
+        </div>
       </div>
-      <p id="selectedDiffText">selected: MEDIUM</p>
-      <button id="playBtn" onclick="startGame()">▶ PLAY</button>
-      <p class="tinytext">high score (medium): <span id="menuHighscore">0</span></p>
-      <div id="statsPanel">
-        <span>games played: <b id="statGames">0</b></span>
-        <span>total treasure: <b id="statCoins">0</b></span>
-        <span>best combo ever: <b id="statCombo">x1</b></span>
-        <span>deepest level: <b id="statLevel">1</b></span>
+
+      <div id="gameOverOverlay" class="overlay hidden">
+        <h2 id="gameOverTitle">GAME OVER</h2>
+        <p id="gameOverStats"></p>
+        <div id="achievementBox"></div>
+        <button onclick="backToMenu()">BACK TO MENU</button>
+        <button onclick="startGame()">PLAY AGAIN</button>
       </div>
+
+      <div id="pauseOverlay" class="overlay hidden">
+        <h2>PAUSED</h2>
+        <button onclick="togglePause()">RESUME</button>
+        <button onclick="backToMenu()">QUIT TO MENU</button>
+      </div>
+
+      <div id="bossWarning" class="hidden">⚠️ BOSS SHARK INCOMING ⚠️</div>
     </div>
 
-    <div id="gameOverOverlay" class="overlay hidden">
-      <h2 id="gameOverTitle">GAME OVER</h2>
-      <p id="gameOverStats"></p>
-      <div id="achievementBox"></div>
-      <button onclick="backToMenu()">BACK TO MENU</button>
-      <button onclick="startGame()">PLAY AGAIN</button>
+
+
+    <div id="hud" class="hidden">
+      <span>SCORE: <b id="score">0</b></span>
+      <span>COMBO: <b id="combo">x1</b></span>
+      <span>LIVES: <b id="lives">💗💗💗</b></span>
+      <span>LEVEL: <b id="level">1</b></span>
+      <span>TIME: <b id="time">60</b></span>
+      <span>BEST: <b id="highscore">0</b></span>
     </div>
 
-    <div id="pauseOverlay" class="overlay hidden">
-      <h2>PAUSED</h2>
-      <button onclick="togglePause()">RESUME</button>
-      <button onclick="backToMenu()">QUIT TO MENU</button>
+    <div id="controls" class="hidden">
+      <button onclick="togglePause()">⏸ PAUSE</button>
+      <button onclick="toggleSound()"><span id="soundIcon">🔊</span> SOUND</button>
+      <button onclick="backToMenu()">⏹ QUIT</button>
     </div>
 
-    <div id="bossWarning" class="hidden">⚠️ BOSS SHARK INCOMING ⚠️</div>
+    <div id="touchControls" class="hidden">
+      <div></div>
+      <button class="touchBtn" data-key="arrowup">⬆</button>
+      <div></div>
+      <button class="touchBtn" data-key="arrowleft">⬅</button>
+      <div></div>
+      <button class="touchBtn" data-key="arrowright">➡</button>
+      <div></div>
+      <button class="touchBtn" data-key="arrowdown">⬇</button>
+      <div></div>
+    </div>
+
+    <div id="msgBox"></div>
+
+    <div id="instructions">
+      <b>How to play</b><br>
+      arrow keys / WASD / on-screen buttons move your pirate 🏴‍☠️<br>
+      grab 💰 coins and 🧰 chests for points — chain them fast for a combo multiplier<br>
+      power-ups: ⭐ speed, 🛡️ shield, 🧲 magnet, ❄️ freeze sharks, ⏱️ bonus time<br>
+      avoid 🦈 sharks or lose a life — bigger 🦈👑 boss sharks show up every 3rd level<br>
+      clear the treasure on screen to level up. press SPACE to pause.
+    </div>
   </div>
 
 
 
-  <div id="hud" class="hidden">
-    <span>SCORE: <b id="score">0</b></span>
-    <span>COMBO: <b id="combo">x1</b></span>
-    <span>LIVES: <b id="lives">💗💗💗</b></span>
-    <span>LEVEL: <b id="level">1</b></span>
-    <span>TIME: <b id="time">60</b></span>
-    <span>BEST: <b id="highscore">0</b></span>
-  </div>
 
-  <div id="controls" class="hidden">
-    <button onclick="togglePause()">⏸ PAUSE</button>
-    <button onclick="toggleSound()"><span id="soundIcon">🔊</span> SOUND</button>
-    <button onclick="backToMenu()">⏹ QUIT</button>
-  </div>
-
-  <div id="touchControls" class="hidden">
-    <div></div>
-    <button class="touchBtn" data-key="arrowup">⬆</button>
-    <div></div>
-    <button class="touchBtn" data-key="arrowleft">⬅</button>
-    <div></div>
-    <button class="touchBtn" data-key="arrowright">➡</button>
-    <div></div>
-    <button class="touchBtn" data-key="arrowdown">⬇</button>
-    <div></div>
-  </div>
-
-  <div id="msgBox"></div>
-
-  <div id="instructions">
-    <b>How to play</b><br>
-    arrow keys / WASD / on-screen buttons move your pirate 🏴‍☠️<br>
-    grab 💰 coins and 🧰 chests for points — chain them fast for a combo multiplier<br>
-    power-ups: ⭐ speed, 🛡️ shield, 🧲 magnet, ❄️ freeze sharks, ⏱️ bonus time<br>
-    avoid 🦈 sharks or lose a life — bigger 🦈👑 boss sharks show up every 3rd level<br>
-    clear the treasure on screen to level up. press SPACE to pause.
-  </div>
-</div>
-
-
-
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
