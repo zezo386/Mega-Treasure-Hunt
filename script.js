@@ -5,7 +5,7 @@ sharkPng.src = "shark.png"
 const BossSharkPng = new Image();
 BossSharkPng.src = "boss shark.png";
 
-const API_URL = "http://127.0.0.1:8000/";
+const API_URL = "https://mega-treasure-hunt-backend-deployment-production.up.railway.app/";
 
 const DIFFICULTY = {
   easy: { time: 80, playerSpeed: 5, sharkSpeed: 1.7, sharkPerLevel: 1, coinBase: 3, chaseChance: 0.15, bossChargeTime: 5000},
