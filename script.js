@@ -32,6 +32,7 @@ let coins = [];
 let sharks = [];
 let powerups = [];
 let particles = [];
+let floaters = [];
 
 let score = 0;
 let combo = 1;
@@ -364,6 +365,15 @@ function updateParticles() {
   }
 }
 
+function updateFloaters() {
+  for (let i = floaters.length - 1; i >= 0; i--){
+    let f = floaters[i];
+    f.y -= 1;
+    f.life--;
+    if (f.life <= 0) floaters.splice(i,1)
+  }
+}
+
 function hits(a, b) {
   let ax = a.sizex ? a.sizex : a.size;
   let ay = a.sizey ? a.sizey : a.size;
@@ -397,6 +407,15 @@ function checkCollisions() {
       let base = coin.isChest ? 50 : 10;
       let gained = base * combo;
       score += gained;
+
+      floaters.push({
+        x: coin.x + coin.size/2,
+        y: coin.y,
+        text: "+" + gained,
+        color: "#ffd700",
+        life: 45,
+        Maxlife: 45
+      })
 
       if (coin.isChest) {
         chestSound();
@@ -589,6 +608,16 @@ function draw() {
     ctx.globalAlpha = 1;
   });
 
+  floaters.forEach(f => {
+    ctx.globalAlpha = Math.max(f.life / 30, 0);
+    ctx.fillStyle = f.color;
+    ctx.font = "20px poppins"
+    ctx.textAling = "center";
+    ctx.fillText(f.text, f.x, f.y);
+    ctx.globalAlpha = 1;
+  });
+  ctx.textAlign = "left"; 
+
   if (now < freezeUntil) {
     ctx.fillStyle = "rgba(150, 220, 255, 0.12)";
     ctx.fillRect(-10, -10, canvas.width + 20, canvas.height + 20);
@@ -606,6 +635,7 @@ function gameLoop() {
   applyMagnet(now);
   checkCollisions();
   updateParticles();
+  updateFloaters();
   draw();
 }
 
